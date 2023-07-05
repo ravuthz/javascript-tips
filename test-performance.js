@@ -4,7 +4,13 @@ const performanceTest = (fn, interations = 100_000) => {
   return ((performance.now() - start) * 1000).toFixed(3);
 };
 
-const data = [...Array(1000).keys()];
+const consoleTest = (name, fn, interations = 100_000) => {
+  console.time(name);
+  new Array(interations).fill(0).forEach(() => fn());
+  console.timeEnd(name);
+};
+
+const data = [...Array(10_000).keys()];
 
 console.log(
   "test function 1: ",
@@ -21,3 +27,11 @@ console.log(
   }),
   "seconds"
 );
+
+consoleTest('function 1', () => {
+    data.find((x) => x == 100);
+});
+
+consoleTest('function 2', () => {
+    data.filter((x) => x == 100).at(0);
+});
